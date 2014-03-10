@@ -1,0 +1,15 @@
+#!/bin/sh
+
+[ "$#" != 2 ] && {
+	echo "$0: error: expected arguments: object, file";
+	exit 1;
+} >&2;
+
+cmd="objdump --disassemble -Sl -M intel,intel-mnemonic";
+
+echo `basename $0`: "Generating Intel Style Dissassembly of $1 as $2" >&2;
+
+file $1 || exit $?;
+echo;
+
+$cmd $1 | sed '/^$/N;/^\n$/D' | sed -re 's/^(\/.*)$/\n\0\n/' > $2;
