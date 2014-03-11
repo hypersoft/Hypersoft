@@ -1,6 +1,6 @@
 /*
 
-Fri Feb 28 07:39:02 CST 2014
+Tue Mar 11 10:09:45 CDT 2014
 
 Copyright (c) 2014, Triston J. Taylor
 All rights reserved.
@@ -28,36 +28,41 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-#ifndef HYPERSTACK_H
-#define HYPERSTACK_H
-
+#define HYPERSOFT_C
 #include "Hypersoft.h"
+#undef HYPERSOFT_C
 
-#ifndef HYPER_STACK_SYSTEM
-	#define linkage extern
-	typedef void * HyperStack;
-#else
-	#define linkage
-#endif
+void * hsCopyMemory(void * dest, void * src, register size_t units) {
+	register void **d = dest, ** s = src;
+	register size_t copy = 0;
+	while (copy < units) d[copy] = s[copy++];
+	return dest;
+}
 
-/* PP_NARG is defined in Hypersoft.h */
+void * hsCopyMemory8(void * dest, void * src, register size_t units) {
+	register int8_t **d = dest, ** s = src;
+	register size_t copy = 0;
+	while (copy < units) d[copy] = s[copy++];
+	return dest;
+}
 
-#define HyperStackPush(stack, ...)                                             \
-__HyperStackPush(stack, HS_MACRO_ARGC(__VA_ARGS__), __VA_ARGS__)
-	
-#define HyperStackUnshift(stack, ...)                                          \
-__HyperStackUnshift(stack, HS_MACRO_ARGC(__VA_ARGS__), __VA_ARGS__)
-//__HyperStackUnshift(stack, __VA_ARGS__, EOF)
+void * hsCopyMemory16(void * dest, void * src, register size_t units) {
+	register int16_t **d = dest, ** s = src;
+	register size_t copy = 0;
+	while (copy < units) d[copy] = s[copy++];
+	return dest;
+}
 
-linkage size_t __HyperStackPush(HyperStack stack, size_t arguments, ...);
-linkage void * HyperStackPop(HyperStack stack);
-linkage void * HyperStackShift(HyperStack stack);
-linkage size_t __HyperStackUnshift(HyperStack stack, size_t arguments, ...);
-linkage void * HyperStackPeek(HyperStack stack, size_t index);
-linkage void * HyperStackPoke(HyperStack stack, size_t index, void * value);
-linkage HyperStack HyperStackSlice(HyperStack stack, int64_t start, int64_t end);
+void * hsCopyMemory32(void * dest, void * src, register size_t units) {
+	register int32_t **d = dest, ** s = src;
+	register size_t copy = 0;
+	while (copy < units) d[copy] = s[copy++];
+	return dest;
+}
 
-linkage HyperStack hsCreateStack();
-linkage void * hsFreeStack(HyperStack stack);
-
-#endif /* HYPERSTACK_H */
+void * hsCopyMemory64(void * dest, void * src, register size_t units) {
+	register int64_t **d = dest, ** s = src;
+	register size_t copy = 0;
+	while (copy < units) d[copy] = s[copy++];
+	return dest;
+}

@@ -46,13 +46,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	__VA_ARGS_; \
 }
 
-#define PP_NARG(...) \
-         PP_NARG_(__VA_ARGS__,PP_RSEQ_N())
+#define HS_MACRO_ARGC(...) \
+         HS_MACRO_ARG(__VA_ARGS__,HS_MACRO_ARG_LIST())
 
-#define PP_NARG_(...) \
-         PP_ARG_N(__VA_ARGS__)
+#define HS_MACRO_ARG(...) \
+         HS_MACRO_ARGS(__VA_ARGS__)
 
-#define PP_ARG_N( \
+#define HS_MACRO_ARGS( \
 _256, _255, _254, _253, _252, _251, _250, _249, _248, _247, \
 _246, _245, _244, _243, _242, _241, _240, _239, _238, _237, \
 _236, _235, _234, _233, _232, _231, _230, _229, _228, _227, \
@@ -78,7 +78,7 @@ _35, _34, _33, _32, _31, _30, _29, _28, _27, _26, _25, _24, \
 _23, _22, _21, _20, _19, _18, _17, _16, _15, _14, _13, _12, \
 _11, _10, _9, _8, _7, _6, _5, _4, _3, _2, _1, N, ...) N
 
-#define PP_RSEQ_N() \
+#define HS_MACRO_ARG_LIST() \
 256, 255, 254, 253, 252, 251, 250, 249, 248, 247, 246, 245, \
 244, 243, 242, 241, 240, 239, 238, 237, 236, 235, 234, 233, \
 232, 231, 230, 229, 228, 227, 226, 225, 224, 223, 222, 221, \
@@ -104,5 +104,16 @@ _11, _10, _9, _8, _7, _6, _5, _4, _3, _2, _1, N, ...) N
 #define hsBit(n) (1LL << ((n)-1))
 #define hsIsBit(test, bit) (test & hsBit(bit))
 
+#ifdef HYPERSOFT_C
+
+#else
+
+extern void * hsCopyMemory8(void * dest, void * src, register size_t units);
+extern void * hsCopyMemory16(void * dest, void * src, register size_t units);
+extern void * hsCopyMemory32(void * dest, void * src, register size_t units);
+extern void * hsCopyMemory64(void * dest, void * src, register size_t units);
+extern void * hsCopyMemory(void * dest, void * src, register size_t units);
+
+#endif
 
 #endif /* HYPERSOFT_H */

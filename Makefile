@@ -31,7 +31,7 @@ all: headers HyperVariant HyperStack HyperTable exam dasms
 build.headers = $(shell echo $(build.inc)/Hyper{Variant,Stack,Table,soft}.h)
 build.headers += $(build.inc)/utfx.h
 
-build.objects = $(shell echo $(build.bin)/Hyper{Variant,Stack,Table}.o)
+build.objects = $(shell echo $(build.bin)/Hyper{Variant,Stack,Table,soft}.o)
 build.objects += $(build.bin)/exam.o $(build.bin)/utfx.o
 
 build.dasms = $(build.objects:%.o=%.o.s) $(build.bin)/exam.e.s
@@ -49,8 +49,8 @@ HyperVariant: $(build.bin)/HyperVariant.o
 HyperStack: $(build.bin)/HyperStack.o
 HyperTable: $(build.bin)/HyperTable.o
 
-CFLAGS += -Wpedantic -std=iso9899:2011 $(build.mode) 
-#-O3 -MMD \
+CFLAGS += -MMD -Wpedantic -std=iso9899:2011 $(build.mode) 
+#-O3 \
 #	-faggressive-loop-optimizations -fkeep-inline-functions
 
 ifeq (triston, $(USER))

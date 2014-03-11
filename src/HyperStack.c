@@ -73,13 +73,6 @@ void * HyperStackPop(HyperStack stack) {
 	else return stack->data[--stack->count];
 }
 
-void * memcpy32(void * dest, void * src, register size_t units) {
-	register void **d = dest, ** s = src;
-	register size_t copy = 0;
-	while (copy < units) d[copy] = s[copy++];
-	return dest;
-}
-
 void * HyperStackShift(HyperStack stack) {
 	if (! stack->count) return NULL;
 
@@ -89,7 +82,7 @@ void * HyperStackShift(HyperStack stack) {
 	if (stack->shiftIndex == 16 ) {
 		stack->units -= 8;
 		void ** head = malloc(hsStackSize(stack));
-		stack->data = memcpy32(&head[(stack->shiftIndex = 7)],
+		stack->data = hsCopyMemory(&head[(stack->shiftIndex = 7)],
 			stack->data,
 				stack->count
 		); free(stack->head);
@@ -116,7 +109,7 @@ size_t __HyperStackUnshift(HyperStack stack, size_t arguments, ...) {
 		void
 			** head = malloc(hsStackSize(stack)),
 				** data = &head[shift+arguments];
-		if (used) memcpy32(data, stack->data, used);
+		if (used) hsCopyMemory(data, stack->data, used);
 		free(stack->head); stack->head = head;
 		stack->data = data;
 		stack->shiftIndex += arguments;
@@ -160,7 +153,7 @@ HyperStack HyperStackSlice(HyperStack stack, int64_t start, int64_t end) {
 	slice->shiftIndex = 3;
 	slice->count = count;
 	slice->units = units;
-	slice->data = memcpy32(&slice->head[3], &stack->data[start], count);
+	slice->data = hsCopyMemory(&slice->head[3], &stack->data[start], count);
 
 	return slice;
 
