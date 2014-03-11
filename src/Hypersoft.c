@@ -32,22 +32,117 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Hypersoft.h"
 #undef HYPERSOFT_C
 
-size_t __hsFree(register size_t arguments, ...) {
+size_t __hsFree(size_t arguments, ...) {
 	register size_t index = 0;
 	va_list ap; va_start(ap, arguments);
 	while (index++ < arguments) free(va_arg(ap, void *));
 	va_end(ap);
 }
 
+void * hsScanMemory(void * loc, size_t value, size_t start, size_t *end)
+{
+
+	register size_t e;
+
+	if (! loc ) return NULL;
+	else if (! end ) return loc;
+	else if (start > *end) return NULL;
+	else if (! (e = *end)) return NULL;
+
+	register size_t *l = loc;
+	register size_t scan = start;
+	while (scan < e) if (l[scan++] == value) {
+		*end = --scan;
+		return l + scan;
+	}
+	return (void*)(*end = 0);
+}
+
+void * hsScanMemory8(void * loc, int8_t value, size_t start, size_t *end)
+{
+
+	register size_t e;
+
+	if (! loc ) return NULL;
+	else if (! end ) return loc;
+	else if (start > *end) return NULL;
+	else if (! (e = *end)) return NULL;
+
+	register int8_t *l = loc;
+	register size_t scan = start;
+	while (scan < e) if (l[scan++] == value) {
+		*end = --scan;
+		return l + scan;
+	}
+	return (void*)(*end = 0);
+}
+
+void * hsScanMemory16(void * loc, int16_t value, size_t start, size_t *end)
+{
+
+	register size_t e;
+
+	if (! loc ) return NULL;
+	else if (! end ) return loc;
+	else if (start > *end) return NULL;
+	else if (! (e = *end)) return NULL;
+
+	register int16_t *l = loc;
+	register size_t scan = start;
+	while (scan < e) if (l[scan++] == value) {
+		*end = --scan;
+		return l + scan;
+	}
+	return (void*)(*end = 0);
+}
+
+void * hsScanMemory32(void * loc, int32_t value, size_t start, size_t *end)
+{
+
+	register size_t e;
+
+	if (! loc ) return NULL;
+	else if (! end ) return loc;
+	else if (start > *end) return NULL;
+	else if (! (e = *end)) return NULL;
+
+	register int32_t *l = loc;
+	register size_t scan = start;
+	while (scan < e) if (l[scan++] == value) {
+		*end = --scan;
+		return l + scan;
+	}
+	return (void*)(*end = 0);
+}
+
+void * hsScanMemory64(void * loc, int64_t value, size_t start, size_t *end)
+{
+
+	register size_t e;
+
+	if (! loc ) return NULL;
+	else if (! end ) return loc;
+	else if (start > *end) return NULL;
+	else if (! (e = *end)) return NULL;
+
+	register int64_t *l = loc;
+	register size_t scan = start;
+	while (scan < e) if (l[scan++] == value) {
+		*end = --scan;
+		return l + scan;
+	}
+	return (void*)(*end = 0);
+}
+
 void * hsSetMemory(void * loc, register size_t value, register size_t units) {
-	register void **l = loc;
+	register size_t *l = loc;
 	register size_t set = 0;
 	while (set < units) l[set++] = value;
 	return loc;
 }
 
 void * hsSetMemory8(void * loc, register int8_t value, register size_t units) {
-	register int8_t **l = loc;
+	register int8_t *l = loc;
 	register size_t set = 0;
 	while (set < units) l[set++] = value;
 	return loc;
@@ -55,7 +150,7 @@ void * hsSetMemory8(void * loc, register int8_t value, register size_t units) {
 
 void * hsSetMemory16(void * loc, register int16_t value, register size_t units)
 {
-	register int16_t **l = loc;
+	register int16_t *l = loc;
 	register size_t set = 0;
 	while (set < units) l[set++] = value;
 	return loc;
@@ -63,7 +158,7 @@ void * hsSetMemory16(void * loc, register int16_t value, register size_t units)
 
 void * hsSetMemory32(void * loc, register int32_t value, register size_t units)
 {
-	register int32_t **l = loc;
+	register int32_t *l = loc;
 	register size_t set = 0;
 	while (set < units) l[set++] = value;
 	return loc;
@@ -71,7 +166,7 @@ void * hsSetMemory32(void * loc, register int32_t value, register size_t units)
 
 void * hsSetMemory64(void * loc, register int64_t value, register size_t units)
 {
-	register int64_t **l = loc;
+	register int64_t *l = loc;
 	register size_t set = 0;
 	while (set < units) l[set++] = value;
 	return loc;

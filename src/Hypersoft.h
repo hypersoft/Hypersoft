@@ -111,7 +111,23 @@ __hsFree(arguments, HS_MACRO_ARGC(__VA_ARGS__), __VA_ARGS__)
 
 #else
 
-extern size_t __hsFree(register size_t arguments, ...);
+extern size_t __hsFree(size_t arguments, ...);
+
+extern void * hsScanMemory8(
+	void * dest, int8_t value, size_t start, size_t end
+);
+extern void * hsScanMemory16(
+	void * dest, int16_t value, size_t start, size_t end
+);
+extern void * hsScanMemory32(
+	void * dest, int32_t value, size_t start, size_t end
+);
+extern void * hsScanMemory64(
+	void * dest, int64_t value, size_t start, size_t end
+);
+extern void * hsScanMemory(
+	void * dest, size_t value, size_t start, size_t end
+);
 
 extern void * hsSetMemory8(
 	void * dest, register int8_t value, register size_t units

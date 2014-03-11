@@ -69,6 +69,23 @@ size_t hsVariantImpact(register HyperVariant var) {
 
 }
 
+size_t hsVariantSize(register HyperVariant var) {
+
+	hsIfVariantIsNull(var, return 0);
+
+	return (var->type & (1|2|4|8));
+}
+
+#define hsVariantSize(var) (var) ? var->type & (1|2|4|8) : 0
+
+size_t hsVariantLength(register HyperVariant var) {
+
+	hsIfVariantIsNull(var, return 0);
+
+	register uint8_t type = var->type, units = var->units;
+	return ((type & (1|2|4|8)) * units);
+}
+
 HyperVariant hsVariantSlice(HyperVariant var, int64_t start, int64_t end) {
 
 	hsIfVariantIsNull(var, NULL) else
