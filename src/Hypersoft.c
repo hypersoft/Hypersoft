@@ -32,6 +32,51 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Hypersoft.h"
 #undef HYPERSOFT_C
 
+size_t __hsFree(register size_t arguments, ...) {
+	register size_t index = 0;
+	va_list ap; va_start(ap, arguments);
+	while (index++ < arguments) free(va_arg(ap, void *));
+	va_end(ap);
+}
+
+void * hsSetMemory(void * loc, register size_t value, register size_t units) {
+	register void **l = loc;
+	register size_t set = 0;
+	while (set < units) l[set++] = value;
+	return loc;
+}
+
+void * hsSetMemory8(void * loc, register int8_t value, register size_t units) {
+	register int8_t **l = loc;
+	register size_t set = 0;
+	while (set < units) l[set++] = value;
+	return loc;
+}
+
+void * hsSetMemory16(void * loc, register int16_t value, register size_t units)
+{
+	register int16_t **l = loc;
+	register size_t set = 0;
+	while (set < units) l[set++] = value;
+	return loc;
+}
+
+void * hsSetMemory32(void * loc, register int32_t value, register size_t units)
+{
+	register int32_t **l = loc;
+	register size_t set = 0;
+	while (set < units) l[set++] = value;
+	return loc;
+}
+
+void * hsSetMemory64(void * loc, register int64_t value, register size_t units)
+{
+	register int64_t **l = loc;
+	register size_t set = 0;
+	while (set < units) l[set++] = value;
+	return loc;
+}
+
 void * hsCopyMemory(void * dest, void * src, register size_t units) {
 	register void **d = dest, ** s = src;
 	register size_t copy = 0;

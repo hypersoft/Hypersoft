@@ -104,9 +104,30 @@ _11, _10, _9, _8, _7, _6, _5, _4, _3, _2, _1, N, ...) N
 #define hsBit(n) (1LL << ((n)-1))
 #define hsIsBit(test, bit) (test & hsBit(bit))
 
+#define hsFree(arguments, ...)                                                 \
+__hsFree(arguments, HS_MACRO_ARGC(__VA_ARGS__), __VA_ARGS__)
+
 #ifdef HYPERSOFT_C
 
 #else
+
+extern size_t __hsFree(register size_t arguments, ...);
+
+extern void * hsSetMemory8(
+	void * dest, register int8_t value, register size_t units
+);
+extern void * hsSetMemory16(
+	void * dest, register int16_t value, register size_t units
+);
+extern void * hsSetMemory32(
+	void * dest, register int32_t value, register size_t units
+);
+extern void * hsSetMemory64(
+	void * dest, register int64_t value, register size_t units
+);
+extern void * hsSetMemory(
+	void * dest, register size_t value, register size_t units
+);
 
 extern void * hsCopyMemory8(void * dest, void * src, register size_t units);
 extern void * hsCopyMemory16(void * dest, void * src, register size_t units);
