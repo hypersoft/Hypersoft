@@ -208,4 +208,6 @@ linkage void hsVariantEnumReverse
 	VariantIterator forEach,
 		void *private      );
 
+#undef linkage
+
 #endif 

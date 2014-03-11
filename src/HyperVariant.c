@@ -69,58 +69,6 @@ size_t hsVariantImpact(register HyperVariant var) {
 
 }
 
-size_t hsVariantSize(register HyperVariant var) {
-
-	hsIfVariantIsNull(var, return 0);
-
-	return (var->type & (1|2|4|8));
-}
-
-#define hsVariantSize(var) (var) ? var->type & (1|2|4|8) : 0
-
-size_t hsVariantLength(register HyperVariant var) {
-
-	hsIfVariantIsNull(var, return 0);
-
-	register uint8_t type = var->type, units = var->units;
-	return ((type & (1|2|4|8)) * units);
-}
-
- size_t hsVariantPush(HyperVariant var, ...) {
-	char type = var->type;
-	if (type & 1) {
-
-	} else if(type & 2) {
-
-	} else if (type & 3) {
-
-	} else if (type & 4) {
-
-	} else if (type & 8) {
-
-	}
-}
-
-HyperVariant hsVariantPop(HyperVariant var) {
-
-}
-
-HyperVariant hsVariantShift(HyperVariant var) {
-
-}
-
-size_t hsVariantUnshift(HyperVariant var, ...) {
-
-}
-
-HyperVariant hsVariantPeek(HyperVariant var, long long index) {
-
-}
-
-size_t hsVariantPoke(HyperVariant var, ...) {
-
-}
-
 HyperVariant hsVariantSlice(HyperVariant var, int64_t start, int64_t end) {
 
 	hsIfVariantIsNull(var, NULL) else
