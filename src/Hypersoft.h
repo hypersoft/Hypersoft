@@ -107,6 +107,13 @@ _11, _10, _9, _8, _7, _6, _5, _4, _3, _2, _1, N, ...) N
 #define hsFree(arguments, ...)                                                 \
 __hsFree(arguments, HS_MACRO_ARGC(__VA_ARGS__), __VA_ARGS__)
 
+#define hsIsAligned(type, ptr) (ptr % sizeof(type))
+#define hsAlignPadding(type, ptr) (sizeof(type) - hsIsAligned(type, ptr))
+#define hsAligned(type, ptr) hsAlignPadding(type, ptr) + ptr
+
+#define hsAutoAlign(type, ptr)                                                 \
+		(hsIsAligned(type, ptr) ? hsAligned(type, ptr) : ptr)
+
 #ifdef HYPERSOFT_C
 
 #else
